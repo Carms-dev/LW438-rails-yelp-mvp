@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="card my-3 p-4">
+        <h2><%= @restaurant.name %></h2>
+        <p><%= @restaurant.address %></p>
+        <p><%= @restaurant.phone_number %></p>
+        <p><%= @restaurant.category.capitalize %></p>
+    </div>
+
+    <h2>Reviews</h2>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_review">
+        Add Review
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="new_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Review</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <%= render 'reviews/form', restaurant: @restaurant, review: @new_review %>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    <div>
+        <% @reviews.each do |r| %>
+            <h3>- <%= r.rating %> stars - </h3>
+            <p><%= r.content %></p>
+        <% end %>
+    </div>
+</div>
