@@ -12,13 +12,13 @@ class RestaurantsController < ApplicationController
     end
     
     def create
-        @restaurant = Restaurant.new(restaurant_params)
+        restaurant = Restaurant.new(restaurant_params)
         
-        if @restaurant.save
-            render json: { success: true, id: @restaurant.id}
-            # redirect_to restaurant_path(@restaurant, anchor: "restaurant-#{@restarant.id}")
+        if restaurant.save
+            render json: restaurant
         else
-            render json: { errors: @restaurant.errors }, status: :unprocessable_entity 
+            render json: { errors: restaurant.errors }
+            # , status: :unprocessable_entity 
         end
     end
 

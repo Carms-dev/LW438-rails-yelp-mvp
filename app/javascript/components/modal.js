@@ -18,7 +18,6 @@ const initNewRestaurantModal = () => {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
-                    // "Accept": "application/json; odata=verbose"
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
@@ -32,19 +31,20 @@ const initNewRestaurantModal = () => {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    if (data.success) {
-                        window.location.href = `/restaurants/${data.id}`
+                    if (data.id) {
+                        window.location.href = `/restaurants/${data.id}`;
                     } else {
-                        console.log(data.errors)
+                        submitBtn.disabled = true;
                         let html = "";
                         Object.keys(data.errors).forEach((key) => {
-                            console.log(key);
                             data.errors[key].forEach((message) => {
                                 html += `<li>${key} ${message}</li>`;
                             })
                         })
                         errorDisplay.innerHTML = html;
-                        submitBtn.disabled = false;
+                        newRestaurantForm.addEventListener('keyup', () => {
+                            submitBtn.disabled = false;
+                        })
                     }
                 });
         })
