@@ -1,9 +1,14 @@
 <nav class="d-flex justify-content-between align-items-center p-3 border-bottom">
-    <%= link_to 'back', :back %>
     <h3><%= link_to 'Open Rice', restaurants_path %></h3>
+    <%# search bar %>
+    <form class="form-inline">
+        <input type="text" class="form-control" name="search" value = "<%= @keyword ? @keyword : '' %>">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_new_restaurant">
-        Add Restaurant
+        + Restaurant
     </button>
 
     <!-- Modal -->

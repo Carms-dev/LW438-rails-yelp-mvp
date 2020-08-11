@@ -1,9 +1,20 @@
 class RestaurantsController < ApplicationController
     before_action :find_restaurant, only: [:show]
-    before_action :set_new_restaurant
+
 
     def index
-        @restaurants = Restaurant.all
+        @restaurants = Restaurant.all.reverse
+        
+        if params[:search].present? 
+            sql_query = "\
+                restaurants.name LIKE :query \
+                OR restaurants.address LIKE :query \
+                OR restaurants.phone_number LIKE :query \
+                OR restaurants.category LIKE :query \
+            "            
+            @restaurants = Restaurant.where(sql_query, query: "%#{params[:search]}%")
+            @keyword = params[:search]
+        end
     end
     
     def show
@@ -17,8 +28,7 @@ class RestaurantsController < ApplicationController
         if restaurant.save
             render json: restaurant
         else
-            render json: { errors: restaurant.errors }
-            # , status: :unprocessable_entity 
+            render json: { errors: restaurant.errors }, status: :unprocessable_entity # HTML 422
         end
     end
 
@@ -26,10 +36,6 @@ class RestaurantsController < ApplicationController
 
     def find_restaurant
         @restaurant = Restaurant.find(params[:id])
-    end
-
-    def set_new_restaurant
-        @new_restaurant = Restaurant.new
     end
 
     def restaurant_params
