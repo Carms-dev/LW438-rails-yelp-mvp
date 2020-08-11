@@ -1,7 +1,8 @@
-<%= simple_form_for restaurant do |f| %>
-    <%= f.input :name %>
-    <%= f.input :address %>
-    <%= f.input :phone_number %>
-    <%= f.input :category %>
+<%= simple_form_for restaurant, html: { id: "new_restaurant" } do |f| %>
+    <%= f.input :name, html: { id: "restaurant_name" } %>
+    <%= f.input :address, html: { id: "restaurant_address" } %>
+    <%= f.input :phone_number, html: { id: "restaurant_phone_number" } %>
+    <%= f.input :category, html: { id: "restaurant_category" } %>
     <%= f.submit %>
+    <ul id="error_display"></ul>
 <% end %>

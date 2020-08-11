@@ -10,18 +10,15 @@ class RestaurantsController < ApplicationController
         @reviews = @restaurant.reviews
         @new_review = Review.new
     end
-
-    def new
-        
-    end
     
     def create
         @restaurant = Restaurant.new(restaurant_params)
         
         if @restaurant.save
-            redirect_to restaurant_path(@restaurant)
+            render json: { success: true, id: @restaurant.id}
+            # redirect_to restaurant_path(@restaurant, anchor: "restaurant-#{@restarant.id}")
         else
-            # AJAx?
+            render json: { errors: @restaurant.errors }, status: :unprocessable_entity 
         end
     end
 
